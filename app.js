@@ -18,6 +18,17 @@ app.use (morgan('dev'));
 
 app.set ('view engine', 'ejs');
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');    
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Signature');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Key');
+    next();
+    }
+    );
+
 //db info
 //console.log (config.getDbConnectionString());
 mongoose.connect (config.getDbConnectionString());
