@@ -1,45 +1,44 @@
-var express = require ('express');
-var bodyParser = require ('body-parser');
-var morgan = require ('morgan');
-var mongoose = require ('mongoose');
+var express = require('express');
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
 
-var config = require ('./config');
-var setupController = require ('./api/controllers/setupController');
-var todoController = require ('./api/controllers/todoController');
+var config = require('./config');
+var setupController = require('./api/controllers/setupController');
+var todoController = require('./api/controllers/todoController');
 
-var app = express ();
+var app = express();
 var port = process.env.PORT || 3000;
 
-app.use ('/assets', express.static (__dirname + '/public'));
-app.use (bodyParser.json());
-app.use (bodyParser.urlencoded ({extended: true}));
+app.use('/assets', express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use (morgan('dev'));
+app.use(morgan('dev'));
 
-app.set ('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');    
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
     // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-type');
     res.setHeader('Access-Control-Allow-Headers', 'X-Signature');
     res.setHeader('Access-Control-Allow-Headers', 'X-Key');
     next();
-    }
-    );
+});
 
 //db info
 //console.log (config.getDbConnectionString());
-mongoose.connect (config.getDbConnectionString());
+mongoose.connect(config.getDbConnectionString());
 setupController(app);
 todoController(app);
 
-app.get("/", function (req,res){
+app.get("/", function (req, res) {
     res.render("index");
 
 });
 
-app.listen(port, function (){
-    console.log ("App listening on port: " + port);
+app.listen(port, function () {
+    console.log("App listening on port: " + port);
 });
