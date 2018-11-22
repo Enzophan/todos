@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var setupController = require('./api/controllers/setupController');
 var todoController = require('./api/controllers/todoController');
+var categoryController = require('./api/controllers/categoryController');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ app.use(function (req, res, next) {
 mongoose.connect(config.getDbConnectionString());
 setupController(app);
 todoController(app);
+categoryController(app);
 
 app.get("/", function (req, res) {
     res.render("index");

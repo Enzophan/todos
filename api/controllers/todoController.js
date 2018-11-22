@@ -29,6 +29,7 @@ module.exports = function (app) {
 
     app.post ('/api/todo', function(req, res){
         var todo = {
+            categoryId: req.body.categoryId,
             text: req.body.text,
             isDone: req.body.isDone
         };
@@ -48,6 +49,7 @@ module.exports = function (app) {
             Todos.update({
                 _id: req.body._id
             },{
+                categoryId: req.body.categoryId,                
                 text: req.body.text,
                 isDone: req.body.isDone
             }, function (err, todo){

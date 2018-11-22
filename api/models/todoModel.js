@@ -3,6 +3,7 @@ var mongoose = require ('mongoose');
 var Schema = mongoose.Schema;
 
 var todoSchema = new Schema ({
+    categoryId: String,
     text: String,
     isDone: Boolean
 });
