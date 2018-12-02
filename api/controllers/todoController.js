@@ -13,8 +13,17 @@ function getTodos (res) {
 module.exports = function (app) {
     app.get ('/api/todos', function(req,res){
         getTodos (res);
-
     });
+
+    // app.get('/api/todo/category/:categoryId',function(req,res){
+    //     Todos.find({categoryId: req.params.categoryId}, function(err, todo){
+    //         if(err){
+    //             throw err;
+    //         }else{
+    //             res.json(todo);
+    //         }
+    //     })
+    // });
 
     app.get ('/api/todo/:id', function (req,res) {
         

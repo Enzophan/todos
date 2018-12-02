@@ -11,6 +11,12 @@
     <!--load app css-->
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <!-- Compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+
+    <!-- Compiled and minified JavaScript -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+
     <!--load cdn scripts-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.8.1/js/xeditable.min.js"></script>
@@ -19,6 +25,12 @@
     <script src="assets/js/main/app.js"></script>
     <script src="assets/js/main/services/svTodos.js"></script>
 
+    <style>
+        #todoByCategory {
+            width: 100%;
+            display: none
+        }
+    </style>
 
 </head>
 
@@ -29,6 +41,73 @@
                 <span class="label label-info">{{todos.length}}</span>
             </h1>
         </div>
+        <h2>Summary Nexus</h2>
+        <div id="category-list" class="row">
+            <div class="col-sm-12">
+                <div class="form-group" class="checkbox" ng-repeat="category in categorys">
+                    <div>
+                        <input type="checkbox" ng-model="category.isDone" ng-change="updateCategory(category)">
+                        <a href="" ng-click="deleteCategory(category)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                        <span ng-class="{strike : category.isDone}" editable-text="category.name" e-form="categoryBtnForm" onaftersave="updateCategory(category)">
+                            <strong>{{ category.name }}</strong> - {{ category.date }}
+                        </span>
+                        <a href="" ng-click="categoryBtnForm.$show()" ng-hide="categoryBtnForm.$visible">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="" ng-click="showText(category)">
+                            <i class="fa fa-adn"></i>
+                        </a>
+
+                    </div>
+
+                    <div class="checkbox" ng-repeat="todo in category.todos">
+                        <input type="checkbox" ng-model="todo.isDone" ng-change="updateTodoByCategory(category, todo)">
+                        <a href="" ng-click="deleteTodoByCategory(category, todo)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                        <span ng-class="{strike : todo.isDone}" editable-text="todo.text" e-form="todoBtnForm" onaftersave="updateTodoByCategory(category, todo)">{{ todo.text }}</span>
+                        <a href="" ng-click="todoBtnForm.$show()" ng-hide="todoBtnForm.$visible">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </div>
+
+
+
+
+                </div>
+                <!-- Add Todo by category -->
+                <div id="todoByCategory" class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text-center">
+                        <form>
+                            <div class="input-group mb-3 input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{ category.name }}</span>
+                                </div>
+                                <input type="text" ng-model="formTodo.text" class="form-control input-lg text-center" placeholder="Issue summary...">
+                            </div>
+                            <button type="submit" class="btn btn-success" ng-disabled="!formTodo.text" ng-click="createTodoByCategory(category)">Add</button>
+                        </form>  
+                    </div>
+                </div>
+
+                <!-- Add Category -->
+                <div id="category-form" class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text-center">
+                        <form>
+                            <div class="form-group">
+                                <input type="text" ng-model="formData.name" class="form-control input-lg text-center" placeholder="Category name...">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!formData.name" ng-click="createCategory()">Add</button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <h2>Todos List</h2>
         <div id="todo-list" class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="checkbox" ng-repeat="todo in todos">
@@ -55,14 +134,23 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!formData.text" ng-click="createTodo()">Add</button>
                 </form>
-
             </div>
-
         </div>
 
     </div>
 
 
 </body>
+
+<!-- <script>
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+</script> -->
 
 </html>
