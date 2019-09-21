@@ -87,6 +87,7 @@ module.exports = function (app) {
         );
     });
 
+    // Add Category
     app.post('/api/category', function (req, res) {
         var today = new Date();
         var category = {
@@ -103,6 +104,7 @@ module.exports = function (app) {
         });
     });
 
+    // Update Category
     app.put('/api/category', function (req, res) {
         var today = new Date();
         if (!req.body._id) {
@@ -125,6 +127,7 @@ module.exports = function (app) {
         }
     });
 
+    // Delete Category
     app.delete('/api/category/:id', function (req, res) {
         Categorys.remove({
             _id: req.params.id
